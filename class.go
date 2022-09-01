@@ -2,17 +2,15 @@ package xyerror
 
 import (
 	"fmt"
+
+	"github.com/xybor-x/xylock"
 )
 
-// Class is a special error with error number and error name. Error number is a
-// unique number of Class and helps to determine which module the error Class
-// belongs to.
-//
-// The main purpose of error Class is creating a XyError, so that it should not
-// be used for returning.
-//
-// A Class can be created by one or many parent Classes. The Class without
-// parent is called root Class..
+var counter = 0
+var classes []string
+var lock = xylock.Lock{}
+
+// Class is the generic type for XyError.
 type Class struct {
 	// The unique number of each Class.
 	errno int
@@ -24,29 +22,29 @@ type Class struct {
 	parent []Class
 }
 
-// NewClass creates a root Class with error number will be determined by
-// module's id in Generator.
-func (gen Generator) NewClass(name string, args ...any) Class {
-	manager[gen].count++
+// NewClass creates a root Class.
+func NewClass(name string) Class {
+	lock.Lock()
+	defer lock.Unlock()
+
+	for i := range classes {
+		if classes[i] == name {
+			panic("Do not use an existed error class name: " + name)
+		}
+	}
+	counter++
+	classes = append(classes, name)
+
 	return Class{
-		errno:  manager[gen].count + gen.id,
-		name:   fmt.Sprintf(name, args...),
+		errno:  counter,
+		name:   name,
 		parent: nil,
 	}
 }
 
-// NewClass creates a new Class with called Class as parent.
-func (c Class) NewClass(name string, args ...any) Class {
-	var gen = getGenerator(c.errno)
-	var class = gen.NewClass(name, args...)
-	class.parent = []Class{c}
-	return class
-}
-
-// NewClassM creates a new error class with this class as parent. It has another
-// errorid and the same name.
-func (c Class) NewClassM(gen Generator) Class {
-	var class = gen.NewClass(c.name)
+// NewClass creates a new Class by inheriting the called Class.
+func (c Class) NewClass(name string) Class {
+	var class = NewClass(name)
 	class.parent = []Class{c}
 	return class
 }
@@ -79,5 +77,5 @@ func (c Class) belongsTo(t Class) bool {
 
 // Error is the method to treat Class as an error.
 func (c Class) Error() string {
-	return fmt.Sprintf("[%d] %s", c.errno, c.name)
+	return c.name
 }

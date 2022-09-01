@@ -5,11 +5,7 @@ import (
 	"fmt"
 )
 
-// XyError is an error supporting to check if an error belongs to a class or
-// not.
-//
-// errors.Is(err, cls) returns true if err is created by cls itself or cls's
-// child class.
+// XyError is a special error belongs to a generic error class.
 type XyError struct {
 	// error class
 	c Class

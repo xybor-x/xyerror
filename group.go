@@ -1,9 +1,5 @@
 package xyerror
 
-import (
-	"fmt"
-)
-
 // Group is an array of class. It supports to creates a Class inherited from
 // many parents.
 type Group []Class
@@ -15,8 +11,8 @@ func Combine(cs ...Class) Group {
 }
 
 // NewClass creates a Class with multiparents.
-func (g Group) NewClass(gen Generator, name string, a ...any) Class {
-	var child = gen.NewClass(fmt.Sprintf(name, a...))
+func (g Group) NewClass(name string) Class {
+	var child = NewClass(name)
 	child.parent = g
 	return child
 }

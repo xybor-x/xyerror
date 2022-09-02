@@ -1,15 +1,14 @@
 package xyerror
 
-// Default predefined errors.
+// Predefined Exceptions.
 var (
-	Error               = NewClass("Error")
-	IOError             = NewClass("IOError")
-	FloatingPointError  = NewClass("FloatingPointError")
-	IndexError          = NewClass("IndexError")
-	KeyError            = NewClass("KeyError")
-	NotImplementedError = NewClass("NotImplementedError")
-	ValueError          = NewClass("ValueError")
-	ParameterError      = NewClass("ParameterError")
-	TypeError           = NewClass("TypeError")
-	AssertionError      = NewClass("AssertionError")
+	BaseException      = NewException("BaseException")
+	IOError            = NewException("IOError")
+	FloatingPointError = NewException("FloatingPointError")
+	IndexError         = NewException("IndexError")
+	KeyError           = NewException("KeyError")
+	ValueError         = NewException("ValueError")
+	ParameterError     = NewException("ParameterError")
+	TypeError          = NewException("TypeError")
+	AssertionError     = NewException("AssertionError")
 )

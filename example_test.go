@@ -7,12 +7,12 @@ import (
 	"github.com/xybor-x/xyerror"
 )
 
-func ExampleClass() {
-	// To create a root Class, call xyerror.NewClass with the its name.
-	var RootError = xyerror.NewClass("RootError")
+func ExampleException() {
+	// To create a root Exception, call xyerror.NewException with the its name.
+	var RootError = xyerror.NewException("RootError")
 
-	// You can create a class by inheriting from another one.
-	var ChildError = RootError.NewClass("ChildError")
+	// You can create an Exception by inheriting from another one.
+	var ChildError = RootError.NewException("ChildError")
 
 	fmt.Println(RootError)
 	fmt.Println(ChildError)
@@ -22,10 +22,10 @@ func ExampleClass() {
 	// ChildError
 }
 
-func ExampleXyError() {
-	// You can compare a XyError with an Class by using the built-in method
+func ExampleError() {
+	// You can compare an Error with an Exception by using the built-in method
 	// errors.Is.
-	var NegativeIndexError = xyerror.IndexError.NewClass("NegativeIndexError")
+	var NegativeIndexError = xyerror.IndexError.NewException("NegativeIndexError")
 
 	var err1 = xyerror.ValueError.New("some value error")
 	if errors.Is(err1, xyerror.ValueError) {
@@ -54,11 +54,11 @@ func ExampleXyError() {
 	// err2 is not a ValueError
 }
 
-func ExampleGroup() {
-	// Group allows you to create a class with multiparents.
+func ExampleCombinedException() {
+	// CombinedException allows you to create an Exception with multiparents.
 	var KeyValueError = xyerror.
 		Combine(xyerror.KeyError, xyerror.ValueError).
-		NewClass("KeyValueError")
+		NewException("KeyValueError")
 
 	var err = KeyValueError.New("something is wrong")
 

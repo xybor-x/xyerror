@@ -1,6 +1,7 @@
 # Developing
 
 -   Make it simple by removing Generator.
+-   Rename some structs to make the package more popular.
 
 # v0.0.1 (Sep 02, 2022)
 

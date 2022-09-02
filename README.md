@@ -10,25 +10,22 @@
 
 # Introduction
 
-Package xyerror supports to define error types conveniently.
+Package xyerror supports to define and compare errors conveniently.
 
-The error is inspired by the idea of Python `Exception`.
+The error is inspired by Python `Exception`.
 
 # Features
 
-## Python Exception Idea
-
 Package xyerror defined an error type used to create other errors called
-`Class`, it is equivalent to `Exception` class in Python.
+`Exception`, it is equivalent to `Exception` class in Python.
 
-`Class` creates `XyError` objects by using `New` method. It looks like
-`Exception` class creates `Exception` instances. Example:
+`Exception` creates `Error` objects by using `New` or `Newf` method. It looks
+like `Exception` class creates `Exception` instances. Example:
 
 ```golang
 // xyerror
-var xerr xyerror.XyError
-xerr = xyerror.ValueError.New("value is invalid")
-fmt.Println(xerr)
+var err xyerror.Error = xyerror.ValueError.New("value is invalid")
+fmt.Println(err)
 ```
 
 ```python
@@ -36,11 +33,11 @@ fmt.Println(xerr)
 print(ValueError("value is invalid"))
 ```
 
-A `Class` can "inherits" from another `Class`. Example:
+An `Exception` can "inherits" from another `Exception`. Example:
 
 ```golang
 // xyerror
-var ZeroDivisionError = xyerror.ValueError.NewClass("ZeroDivisionError")
+var ZeroDivisionError = xyerror.ValueError.NewException("ZeroDivisionError")
 fmt.Println(ZeroDivisionError.New("do not divide by zero"))
 ```
 
@@ -51,13 +48,13 @@ class ZeroDivisionError(ValueError):
 print(ZeroDivisionError("do not divide by zero"))
 ```
 
-A `Class` also "inherits" from some `Class` instances. Example:
+An `Exception` also "inherits" from many `Exception` instances. Example:
 
 ```golang
 // xyerror
 var ValueTypeError = xyerror.
     Combine(xyerror.ValueError, xyerror.TypeError).
-    NewClass("ValueTypeError")
+    NewException("ValueTypeError")
 ```
 
 ```python
@@ -66,7 +63,7 @@ class ValueTypeError(ValueError, TypeError):
     ...
 ```
 
-A `XyError` created by `Class` can compare to this `Class`.
+An `Error` created by an `Exception` can compare to that `Exception`.
 
 ```golang
 // xyerror
@@ -75,10 +72,10 @@ func foo() error {
 }
 
 func bar() error {
-    if xerr := foo(); errors.Is(xerr, xyerror.ValueError) {
-        fmt.Println(xerr)
+    if err := foo(); errors.Is(err, xyerror.ValueError) {
+        fmt.Println(err)
     } else {
-        return xerr
+        return err
     }
     return nil
 }
@@ -108,12 +105,12 @@ import (
     "github.com/xybor-x/xyerror"
 )
 
-func ExampleClass() {
-    // To create a root Class, call xyerror.NewClass with the its name.
-    var RootError = xyerror.NewClass("RootError")
+func ExampleException() {
+    // To create a root Exception, call xyerror.NewException with the its name.
+    var RootError = xyerror.NewException("RootError")
 
-    // You can create a class by inheriting from another one.
-    var ChildError = RootError.NewClass("ChildError")
+    // You can create an Exception by inheriting from another one.
+    var ChildError = RootError.NewException("ChildError")
 
     fmt.Println(RootError)
     fmt.Println(ChildError)
@@ -123,14 +120,14 @@ func ExampleClass() {
     // ChildError
 }
 
-func ExampleXyError() {
-    // You can compare a XyError with an Class by using the built-in method
+func ExampleError() {
+    // You can compare an Error with an Exception by using the built-in method
     // errors.Is.
-    var NegativeIndexError = xyerror.IndexError.NewClass("NegativeIndexError")
+    var NegativeIndexError = xyerror.IndexError.NewException("NegativeIndexError")
 
     var err1 = xyerror.ValueError.New("some value error")
     if errors.Is(err1, xyerror.ValueError) {
-       fmt.Println("err1 is a ValueError")
+        fmt.Println("err1 is a ValueError")
     }
     if !errors.Is(err1, NegativeIndexError) {
         fmt.Println("err1 is not a NegativeIndexError")
@@ -155,11 +152,11 @@ func ExampleXyError() {
     // err2 is not a ValueError
 }
 
-func ExampleGroup() {
-    // Group allows you to create a class with multiparents.
+func ExampleCombinedException() {
+    // CombinedException allows you to create an Exception with multiparents.
     var KeyValueError = xyerror.
         Combine(xyerror.KeyError, xyerror.ValueError).
-        NewClass("KeyValueError")
+        NewException("KeyValueError")
 
     var err = KeyValueError.New("something is wrong")
 

@@ -7,16 +7,16 @@ import (
 	"github.com/xybor-x/xyerror"
 )
 
-func TestXyError(t *testing.T) {
-	var c = xyerror.NewClass("XError")
-	var xerr1 = c.Newf("error-%d", 1)
-	var xerr2 = c.New("error-2")
+func TestError(t *testing.T) {
+	var exc = xyerror.NewException("Error")
+	var err1 = exc.Newf("error-%d", 1)
+	var err2 = exc.New("error-2")
 
-	xycond.ExpectEqual(xerr1.Error(), "XError: error-1").Test(t)
-	xycond.ExpectEqual(xerr2.Error(), "XError: error-2").Test(t)
+	xycond.ExpectEqual(err1.Error(), "Error: error-1").Test(t)
+	xycond.ExpectEqual(err2.Error(), "Error: error-2").Test(t)
 }
 
-func TestXyErrorIs(t *testing.T) {
+func TestErrorIs(t *testing.T) {
 	var err1 = xyerror.ValueError.New("err1")
 	var err2 = xyerror.TypeError.New("err2")
 
@@ -39,11 +39,11 @@ func TestOr(t *testing.T) {
 }
 
 func TestCombine(t *testing.T) {
-	var c = xyerror.Combine(xyerror.ValueError, xyerror.TypeError).
-		NewClass("ValueTypeError")
-	var xerr = c.New("foo")
+	var exc = xyerror.Combine(xyerror.ValueError, xyerror.TypeError).
+		NewException("ValueTypeError")
+	var err = exc.New("foo")
 
-	xycond.ExpectError(xerr, xyerror.ValueError).Test(t)
-	xycond.ExpectError(xerr, xyerror.TypeError).Test(t)
-	xycond.ExpectErrorNot(xerr, xyerror.IndexError).Test(t)
+	xycond.ExpectError(err, xyerror.ValueError).Test(t)
+	xycond.ExpectError(err, xyerror.TypeError).Test(t)
+	xycond.ExpectErrorNot(err, xyerror.IndexError).Test(t)
 }

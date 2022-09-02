@@ -5,29 +5,20 @@ import (
 	"fmt"
 )
 
-// XyError is a special error belongs to a generic error class.
-type XyError struct {
-	// error class
-	c Class
-
-	// error message
+// Error is a special error belongs to a generic error class.
+type Error struct {
+	exc Exception
 	msg string
 }
 
-// Error is the method to treat XyError as an error.
-func (xerr XyError) Error() string {
-	return fmt.Sprintf("%s: %s", xerr.c.name, xerr.msg)
+// Error returns the Exception name along with the Error message.
+func (err Error) Error() string {
+	return fmt.Sprintf("%s: %s", err.exc.name, err.msg)
 }
 
-// Is is the method used to customize errors.Is method.
-func (xerr XyError) Is(target error) bool {
-	if !errors.As(target, &Class{}) {
-		return false
-	}
-
-	var tc = target.(Class)
-
-	return xerr.c.belongsTo(tc)
+// Is returns true if Error is created by the target Exception.
+func (err Error) Is(target error) bool {
+	return errors.Is(err.exc, target)
 }
 
 // Or returns the first not-nil error. If all errors are nil, return nil.

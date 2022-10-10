@@ -1,4 +1,4 @@
-# Developing
+# v1.0.0 (Oct 10, 2022)
 
 -   Make it simple by removing Generator.
 -   Rename some structs to make the package more popular.

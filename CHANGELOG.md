@@ -1,3 +1,9 @@
+# v1.0.1 (Jan 7, 2023)
+
+-   Exceptions with different parent now can have the same name.
+-   All exceptions inherit BaseException.
+-   BaseException's name is Exception.
+
 # v1.0.0 (Oct 10, 2022)
 
 -   Make it simple by removing Generator.

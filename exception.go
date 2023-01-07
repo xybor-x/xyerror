@@ -27,7 +27,6 @@ import (
 	"github.com/xybor-x/xylock"
 )
 
-var counter = 0
 var exceptions []string
 var lock = xylock.Lock{}
 
@@ -41,35 +40,38 @@ type Exception struct {
 	// The Exception name
 	name string
 
+	// The name combination of exception and its current.
+	fullName string
+
 	// The parent Exceptions
 	parent []Exception
 }
 
-// NewException creates a root Exception.
+// NewException creates an Exception inherited from the BaseException.
 func NewException(name string) Exception {
-	lock.Lock()
-	defer lock.Unlock()
-
-	for i := range exceptions {
-		if exceptions[i] == name {
-			panic("Do not use an existed Exception name: " + name)
-		}
-	}
-	counter++
-	exceptions = append(exceptions, name)
-
-	return Exception{
-		id:     counter,
-		name:   name,
-		parent: nil,
-	}
+	return BaseException.NewException(name)
 }
 
 // NewException creates a new Exception by inheriting the called Exception.
 func (exc Exception) NewException(name string) Exception {
-	var class = NewException(name)
-	class.parent = []Exception{exc}
-	return class
+	lock.Lock()
+	defer lock.Unlock()
+
+	var fullName = exc.fullName + "." + name
+	for i := range exceptions {
+		if exceptions[i] == fullName {
+			panic("Do not create an existed Exception: " + fullName)
+		}
+	}
+
+	exceptions = append(exceptions, fullName)
+
+	return Exception{
+		id:       len(exceptions),
+		name:     name,
+		fullName: fullName,
+		parent:   []Exception{exc},
+	}
 }
 
 // Newf creates an Error with a formatting message.

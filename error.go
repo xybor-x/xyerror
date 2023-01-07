@@ -23,9 +23,7 @@ package xyerror
 import (
 	"errors"
 	"fmt"
-
-	"golang.org/x/text/cases"
-	"golang.org/x/text/language"
+	"strings"
 )
 
 // Error is a special error belongs to a generic error class.
@@ -55,8 +53,6 @@ func Or(errs ...error) error {
 	return nil
 }
 
-var titler = cases.Title(language.English)
-
 // Message returns only the error message.
 func Message(e error) string {
 	var msg = e.Error()
@@ -64,6 +60,5 @@ func Message(e error) string {
 		msg = xe.msg
 	}
 
-	titler.Reset()
-	return titler.String(msg)
+	return strings.ToUpper(msg[:1]) + msg[1:]
 }

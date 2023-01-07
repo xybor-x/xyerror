@@ -4,5 +4,3 @@ github.com/xybor-x/xylock v0.0.1 h1:/LhbJb6WJkUW+xE4/bBpIC76BKrbgnayiId6LdouqUw=
 github.com/xybor-x/xylock v0.0.1/go.mod h1:IQvixGhBrgKdh0HcCJAqzYzk482SGyYOzezBxK6UdRc=
 golang.org/x/sync v0.0.0-20220819030929-7fc1605a5dde h1:ejfdSekXMDxDLbRrJMwUk6KnSLZ2McaUCVcIKM+N6jc=
 golang.org/x/sync v0.0.0-20220819030929-7fc1605a5dde/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
-golang.org/x/text v0.6.0 h1:3XmdazWV+ubf7QgHSTWeykHOci5oeekaGJBLkrkaw4k=
-golang.org/x/text v0.6.0/go.mod h1:mrYo+phRRbMaCq/xk9113O4dZlRixOauAjOtrjsXDZ8=

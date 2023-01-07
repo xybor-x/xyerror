@@ -34,3 +34,14 @@ func TestException(t *testing.T) {
 	xycond.ExpectTrue(strings.Contains(c1.Error(), "class1")).Test(t)
 	xycond.ExpectTrue(strings.Contains(c2.Error(), "class2")).Test(t)
 }
+
+func TestExceptionSameName(t *testing.T) {
+	var c = xyerror.NewException(t.Name())
+	xycond.ExpectNotPanic(func() { c.NewException(t.Name()) }).Test(t)
+}
+
+func TestExceptionNewError(t *testing.T) {
+	var e1 = xyerror.ValueError.New(t.Name())
+	var e2 = xyerror.TypeError.New(e1)
+	xycond.ExpectEqual(e2.Error(), "TypeError: "+t.Name()).Test(t)
+}

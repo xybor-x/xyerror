@@ -1,3 +1,7 @@
+# v1.0.2 (Jan 7, 2023)
+
+-   Exception.New handles error more exactly.
+
 # v1.0.1 (Jan 7, 2023)
 
 -   Exceptions with different parent now can have the same name.

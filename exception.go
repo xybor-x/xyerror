@@ -81,6 +81,12 @@ func (exc Exception) Newf(msg string, a ...any) Error {
 
 // New creates an Error with default formatting objects.
 func (exc Exception) New(a ...any) Error {
+	for i := range a {
+		if e, ok := a[i].(Error); ok {
+			a[i] = e.msg
+		}
+	}
+
 	return Error{exc: exc, msg: fmt.Sprint(a...)}
 }
 

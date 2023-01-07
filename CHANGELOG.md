@@ -1,3 +1,7 @@
+# v1.0.3 (Jan 7, 2023)
+
+-   Create a function to get error message.
+
 # v1.0.2 (Jan 7, 2023)
 
 -   Exception.New handles error more exactly.

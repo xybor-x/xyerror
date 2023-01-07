@@ -51,3 +51,11 @@ func Or(errs ...error) error {
 
 	return nil
 }
+
+// Message returns only the error message.
+func Message(e error) string {
+	if xe, ok := e.(Error); ok {
+		return xe.msg
+	}
+	return e.Error()
+}

@@ -22,13 +22,13 @@ package xyerror
 
 // Predefined Exceptions.
 var (
-	BaseException      = NewException("BaseException")
-	IOError            = NewException("IOError")
-	FloatingPointError = NewException("FloatingPointError")
-	IndexError         = NewException("IndexError")
-	KeyError           = NewException("KeyError")
-	ValueError         = NewException("ValueError")
-	ParameterError     = NewException("ParameterError")
-	TypeError          = NewException("TypeError")
-	AssertionError     = NewException("AssertionError")
+	BaseException      = Exception{name: "Exception"}
+	IOError            = BaseException.NewException("IOError")
+	FloatingPointError = BaseException.NewException("FloatingPointError")
+	IndexError         = BaseException.NewException("IndexError")
+	KeyError           = BaseException.NewException("KeyError")
+	ValueError         = BaseException.NewException("ValueError")
+	ParameterError     = BaseException.NewException("ParameterError")
+	TypeError          = BaseException.NewException("TypeError")
+	AssertionError     = BaseException.NewException("AssertionError")
 )

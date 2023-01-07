@@ -73,6 +73,6 @@ func TestMessage(t *testing.T) {
 	var e1 = xyerror.ValueError.New("foo-bar")
 	var e2 = errors.New("foo-foo")
 	xycond.ExpectEqual(e1.Error(), "ValueError: foo-bar").Test(t)
-	xycond.ExpectEqual(xyerror.Message(e1), "Foo-Bar").Test(t)
-	xycond.ExpectEqual(xyerror.Message(e2), "Foo-Foo").Test(t)
+	xycond.ExpectEqual(xyerror.Message(e1), "Foo-bar").Test(t)
+	xycond.ExpectEqual(xyerror.Message(e2), "Foo-foo").Test(t)
 }

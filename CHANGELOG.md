@@ -1,3 +1,7 @@
+# v1.0.4 (Jan 7, 2023)
+
+-   Capitalize the result of Message function.
+
 # v1.0.3 (Jan 7, 2023)
 
 -   Create a function to get error message.

@@ -21,6 +21,7 @@
 package xyerror_test
 
 import (
+	"errors"
 	"testing"
 
 	"github.com/xybor-x/xycond"
@@ -66,4 +67,12 @@ func TestCombine(t *testing.T) {
 	xycond.ExpectError(err, xyerror.ValueError).Test(t)
 	xycond.ExpectError(err, xyerror.TypeError).Test(t)
 	xycond.ExpectErrorNot(err, xyerror.IndexError).Test(t)
+}
+
+func TestMessage(t *testing.T) {
+	var e1 = xyerror.ValueError.New(t.Name())
+	var e2 = errors.New(t.Name())
+	xycond.ExpectEqual(e1.Error(), "ValueError: "+t.Name()).Test(t)
+	xycond.ExpectEqual(xyerror.Message(e1), t.Name()).Test(t)
+	xycond.ExpectEqual(xyerror.Message(e2), t.Name()).Test(t)
 }
